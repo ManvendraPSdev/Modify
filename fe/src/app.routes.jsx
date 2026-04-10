@@ -6,7 +6,7 @@ import Protected from "./features/Auth/components/Protected";
 function AppRoutes(){
     return (<BrowserRouter>
         <Routes>
-            <Route path="/" element = <Protected><h1>home</h1></Protected>/>
+            <Route path="/" element = {<Protected><h1>home</h1></Protected>}/>
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
         </Routes>

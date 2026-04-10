@@ -50,15 +50,16 @@ async function registerController(req , res){
 
 async function loginController(req , res){
     const {userName , email , password} = req.body ; 
-
+    console.log(req.body) ; 
     const user = await userModel.findOne({
-        $or : [{
-            userName , 
-            email
-        }]
-    }) ; 
+        $or: [
+            { userName: userName },
+            { email: email }
+        ]
+    });
+    console.log(user) ;
     if(!user){
-        return res.status(402).json({
+        return res.status(404).json({
             message: "user not found register !"
         })
     }

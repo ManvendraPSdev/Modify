@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-  withCredentials: true,
-});
+import { api } from "../../../lib/api.js";
 
 export async function register({ userName, email, password }) {
   try {
@@ -39,7 +34,6 @@ export async function getMe() {
     const response = await api.get("/api/auth/getMe");
     return response.data;
   } catch {
-    // 401 / no session — not an app crash
     return null;
   }
 }

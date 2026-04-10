@@ -4,13 +4,21 @@ const jwt = require("jsonwebtoken") ;
 const blacklistModel = require("../models/blacklist.model.js");
 const redis = require("../config/cache.js");
 
-const authCookieOptions = {
-    httpOnly: true,
-    path: "/",
-    maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-};
+/**
+ * Cross-origin frontends (e.g. Vercel → separate API host) need SameSite=None; Secure.
+ * Set COOKIE_SAME_SITE=none on the API server when CORS_ORIGINS includes a non-localhost URL.
+ */
+function authCookieOptions() {
+    const sameSite = process.env.COOKIE_SAME_SITE === "none" ? "none" : "lax";
+    const secure = sameSite === "none" ? true : process.env.NODE_ENV === "production";
+    return {
+        httpOnly: true,
+        path: "/",
+        maxAge: 24 * 60 * 60 * 1000,
+        sameSite,
+        secure,
+    };
+}
 
 async function registerController(req , res){
     const {userName , email , password , bio , profileImage} = req.body ; 
@@ -42,7 +50,7 @@ async function registerController(req , res){
         email : user.email
     } , process.env.JWTSECRET , {expiresIn : "1d"}) ; 
 
-    res.cookie("token", token, authCookieOptions);
+    res.cookie("token", token, authCookieOptions());
 
     return res.status(200).json({
         message : "user created sucessfully" , 
@@ -85,7 +93,7 @@ async function loginController(req , res){
         email : user.email
     } , process.env.JWTSECRET , {expiresIn : '1d'}) ; 
 
-    res.cookie("token", token, authCookieOptions);
+    res.cookie("token", token, authCookieOptions());
 
     return res.status(200).json({
         message: "login sucessfull"  ,

@@ -1,24 +1,26 @@
-import React from 'react'
-import { useAuth } from '../hooks/useAuth'
-import { useNavigate } from 'react-router';
+import React, { useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
-const Protected = ({children}) => {
+const Protected = ({ children }) => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
 
-    const {user , loading} = useAuth() ; 
-    const navigate = useNavigate() ; 
-
-    if(loading){
-        return (
-            <h1>Loading...</h1>
-        )
-    }
-
+  useEffect(() => {
     if (!loading && !user) {
-        navigate("/register")
-        return null
+      navigate("/register", { replace: true });
     }
+  }, [loading, user, navigate]);
 
-    return children
-}
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
-export default Protected
+  if (!user) {
+    return null;
+  }
+
+  return children;
+};
+
+export default Protected;

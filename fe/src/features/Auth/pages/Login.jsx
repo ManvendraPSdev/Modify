@@ -15,8 +15,8 @@ const Login = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        await handelLogin({userName , email , password}) ; 
-        navigate("/app")
+        const ok = await handelLogin({ userName, email, password })
+        if (ok) navigate("/app")
     }
 
     return (

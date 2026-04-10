@@ -4,6 +4,14 @@ const jwt = require("jsonwebtoken") ;
 const blacklistModel = require("../models/blacklist.model.js");
 const redis = require("../config/cache.js");
 
+const authCookieOptions = {
+    httpOnly: true,
+    path: "/",
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+};
+
 async function registerController(req , res){
     const {userName , email , password , bio , profileImage} = req.body ; 
 
@@ -34,7 +42,7 @@ async function registerController(req , res){
         email : user.email
     } , process.env.JWTSECRET , {expiresIn : "1d"}) ; 
 
-    res.cookie("token" , token)
+    res.cookie("token", token, authCookieOptions);
 
     return res.status(200).json({
         message : "user created sucessfully" , 
@@ -77,7 +85,7 @@ async function loginController(req , res){
         email : user.email
     } , process.env.JWTSECRET , {expiresIn : '1d'}) ; 
 
-    res.cookie("token" , token) ; 
+    res.cookie("token", token, authCookieOptions);
 
     return res.status(200).json({
         message: "login sucessfull"  ,
@@ -114,7 +122,7 @@ async function getMeController(req , res){
 
 async function logoutController(req , res){
     const token = req.cookies.token ; 
-    res.clearCookie("token") ; 
+    res.clearCookie("token", { path: "/" });
     await redis.set(token , Date.now().toString() , "EX" , 60*60)  ;
     res.status(200).json({
         message : "user logout sucessfully"

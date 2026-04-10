@@ -1,61 +1,72 @@
-import { useContext , useEffect } from "react";
-import { register , login , getMe, logout } from "../services/auth.service";
+import { useContext, useEffect, useCallback } from "react";
+import { register, login, getMe, logout } from "../services/auth.service";
 import { AuthContext } from "../auth.context";
 
-export const useAuth = ()=>{
-    const context = useContext(AuthContext) ; 
-    const {user , setUser, loading , setLoading} = context ; 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  const { user, setUser, loading, setLoading } = context;
 
-    const handelRegister = async ({userName , email , password})=>{
-        setLoading(true) ; 
-        try {
-            const data = await register({userName , email , password}) ; 
-            setUser(data.user) ; 
-        } catch (error) {
-            console.log(error) ; 
-        }finally{
-            setLoading(false) ; 
-        }
-    } ; 
-
-    const handelLogin = async({userName , email , password})=>{
-        setLoading(true) ; 
-        try {
-            const data = await login({userName , email , password}) ; 
-            setUser(data.user) ; 
-        } catch (error) {
-            console.log(error); 
-        }finally{
-            setLoading(false)
-        }
+  const handelRegister = async ({ userName, email, password }) => {
+    setLoading(true);
+    try {
+      const data = await register({ userName, email, password });
+      const nextUser = data?.user ?? null;
+      setUser(nextUser);
+      return nextUser !== null;
+    } catch (error) {
+      console.error(error);
+      setUser(null);
+      return false;
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const handelLogout = async()=>{
-        setLoading(true) ; 
-        try {
-            await logout();
-            setUser(null) ; 
-        } catch (err) {
-            console.log(err);
-        }finally{
-            setLoading(false) ; 
-        }
+  const handelLogin = async ({ userName, email, password }) => {
+    setLoading(true);
+    try {
+      const data = await login({ userName, email, password });
+      const nextUser = data?.user ?? null;
+      setUser(nextUser);
+      return nextUser !== null;
+    } catch (error) {
+      console.error(error);
+      setUser(null);
+      return false;
+    } finally {
+      setLoading(false);
     }
-    
+  };
 
-    const handelGetMe = async()=>{
-        setLoading(true) ; 
-        console.log("hello1") 
-        const data = await getMe() ;
-        console.log("hello2") 
-        setUser(data.user) ; 
-        console.log("hello3")  // yaha acess nhi aa raha hai
-        setLoading(false) ; 
+  const handelLogout = async () => {
+    setLoading(true);
+    try {
+      await logout();
+      setUser(null);
+    } catch (err) {
+      console.error(err);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    useEffect(()=>{
-        handelGetMe()
-    } , []) ;
+  const handelGetMe = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await getMe();
+      setUser(data?.user ?? null);
+    } catch (error) {
+      console.error(error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [setUser, setLoading]);
 
-    return {user, loading , handelRegister , handelLogin , handelLogout} ; 
-}
+  useEffect(() => {
+    handelGetMe();
+  }, [handelGetMe]);
+
+  return { user, loading, handelRegister, handelLogin, handelLogout, handelGetMe };
+};

@@ -1,50 +1,55 @@
-import axios from "axios" ; 
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials : true
-}) ;
+  baseURL: "http://localhost:3000",
+  withCredentials: true,
+});
 
-export async function register({userName , email , password}){
-    try {
-        const response = await api.post("/api/auth/register" , {
-            userName , 
-            email , 
-            password
-        })
-        return response.data ; 
-    } catch (error) {
-        console.log(error) ; 
-
-    }
+export async function register({ userName, email, password }) {
+  try {
+    const response = await api.post("/api/auth/register", {
+      userName,
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("register:", error?.response?.status, error?.response?.data);
+    return null;
+  }
 }
 
-export async function login({userName , email , password}){
-    try {
-        const response = await api.post("/api/auth/login" , {
-            userName , email , password
-        })
-        return response.data ; 
-    } catch (error) {
-        console.log(error) ; 
-    }
+export async function login({ userName, email, password }) {
+  try {
+    const response = await api.post("/api/auth/login", {
+      userName,
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("login:", error?.response?.status, error?.response?.data);
+    return null;
+  }
 }
 
-export async function getMe(){
-    try {
-        const response = await api.get("/api/auth/getMe") ; 
-        console.log(response.data) ; 
-        return response.data ; 
-    } catch (error) {
-        console.log(error) ; 
-    }
+/** Returns `{ user }` or `null` when not logged in / network error. */
+export async function getMe() {
+  try {
+    const response = await api.get("/api/auth/getMe");
+    return response.data;
+  } catch {
+    // 401 / no session — not an app crash
+    return null;
+  }
 }
 
-export async function logout(){
-    try {
-        const response = await api.post("/api/auth/logout") ; 
-        return response.data ; 
-    } catch (error) {
-        console.log(error)
-    }
+export async function logout() {
+  try {
+    const response = await api.post("/api/auth/logout");
+    return response.data;
+  } catch (error) {
+    console.error("logout:", error?.response?.status, error?.response?.data);
+    return null;
+  }
 }

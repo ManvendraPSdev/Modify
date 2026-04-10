@@ -17,9 +17,8 @@ const Register = () => {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        await handelRegister({ userName, password, email })
-
-        navigate("/app")
+        const ok = await handelRegister({ userName, password, email })
+        if (ok) navigate("/app")
 
     }
 

@@ -5,10 +5,10 @@ const redis = require("../config/cache.js")
 async function authUser(req , res , next){
     const token = req.cookies.token 
 
-    if(!token){
-        return res.status(404).json({
-            message : "Unauthorised acess no token!!"
-        })
+    if (!token) {
+        return res.status(401).json({
+            message: "Unauthorized: no session token",
+        });
     }
 
     const isTokenBlacklisted = await redis.get(token) ;

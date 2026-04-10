@@ -1,0 +1,97 @@
+@use "../mixins/mixins" as *;
+@use "../base/variables" as *;
+
+.detection-panel {
+  @include glass-panel;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.detection-panel__header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.detection-panel__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.detection-panel__hint {
+  font-size: 0.88rem;
+  color: $text-muted;
+}
+
+.detection-panel__video-wrap {
+  position: relative;
+  border-radius: $radius-md;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid $glass-border;
+}
+
+.detection-panel__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detection-panel__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.detection-panel__scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--mood-primary),
+    transparent
+  );
+  box-shadow: 0 0 24px var(--mood-glow);
+  opacity: 0.85;
+}
+
+.detection-panel__expression {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--mood-primary);
+  @include transition-smooth(color text-shadow, 0.5s);
+  text-shadow: 0 0 40px var(--mood-glow-soft);
+}
+
+.detection-panel__actions {
+  @include flex-center;
+  margin-top: 1.25rem;
+}
+
+.detection-panel__btn {
+  padding: 0.85rem 1.75rem;
+  border-radius: $radius-pill;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--mood-primary), var(--mood-secondary));
+  color: $bg-deep;
+  @include mood-glow-theme(14px);
+  @include transition-smooth(transform, 0.2s);
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

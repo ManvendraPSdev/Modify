@@ -1,0 +1,153 @@
+@use "../mixins/mixins" as *;
+@use "../base/variables" as *;
+
+.upload-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2rem) 0 6rem;
+}
+
+.upload-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.upload-page__subtitle {
+  color: $text-muted;
+  margin-bottom: 2rem;
+}
+
+.upload-drop {
+  @include glass-panel;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-style: dashed;
+  border-width: 2px;
+  margin-bottom: 2rem;
+  @include transition-smooth(border-color box-shadow background, 0.35s);
+
+  &--active {
+    border-color: var(--mood-primary);
+    background: var(--mood-glow-soft);
+    box-shadow: 0 0 40px var(--mood-glow-soft);
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__text {
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  &__hint {
+    font-size: 0.88rem;
+    color: $text-muted;
+  }
+
+  &__input {
+    display: none;
+  }
+}
+
+.upload-drop__browse {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: $radius-pill;
+  font-weight: 600;
+  font-size: 0.88rem;
+  border: 1px solid $glass-border;
+  color: $text-primary;
+  cursor: pointer;
+  @include transition-smooth(border-color box-shadow, 0.25s);
+
+  &:hover {
+    border-color: var(--mood-primary);
+    box-shadow: 0 0 20px var(--mood-glow-soft);
+  }
+}
+
+.upload-moods {
+  margin-bottom: 1.5rem;
+}
+
+.upload-moods__label {
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+  display: block;
+}
+
+.upload-moods__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.upload-mood-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-md;
+  border: 2px solid $glass-border;
+  font-weight: 600;
+  @include transition-smooth(all, 0.3s);
+
+  &--happy {
+    &.upload-mood-btn--selected {
+      border-color: $color-happy;
+      background: rgba($color-happy, 0.15);
+      @include mood-glow($color-happy, 16px);
+    }
+  }
+
+  &--sad {
+    &.upload-mood-btn--selected {
+      border-color: $color-sad;
+      background: rgba($color-sad, 0.15);
+      @include mood-glow($color-sad, 16px);
+    }
+  }
+
+  &--surprised {
+    &.upload-mood-btn--selected {
+      border-color: $color-surprised;
+      background: rgba($color-surprised, 0.15);
+      @include mood-glow($color-surprised, 16px);
+    }
+  }
+}
+
+.upload-submit {
+  width: 100%;
+  padding: 1rem;
+  border-radius: $radius-pill;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--mood-primary), var(--mood-secondary));
+  color: $bg-deep;
+  @include mood-glow-theme(14px);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.upload-status {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: $text-muted;
+  text-align: center;
+
+  &--error {
+    color: $color-surprised;
+  }
+
+  &--ok {
+    color: $color-happy;
+  }
+}

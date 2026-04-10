@@ -1,0 +1,44 @@
+@use "../mixins/mixins" as *;
+@use "../base/variables" as *;
+
+.mood-background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(var(--mood-brightness));
+  @include transition-smooth(filter 0.6s ease, 0.6s);
+}
+
+.mood-background__gradient {
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, var(--mood-glow-soft), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 80%, var(--mood-glow-soft), transparent 50%),
+    linear-gradient(165deg, var(--mood-gradient-a) 0%, var(--mood-gradient-b) 45%, $bg-deep 100%);
+  @include transition-smooth(background 0.85s ease, 0.85s);
+  animation: mood-bg-drift 22s ease-in-out infinite alternate;
+}
+
+.mood-background__mesh {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 0
+  );
+  background-size: 40px 40px;
+}
+
+@keyframes mood-bg-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-3%, 2%) scale(1.04);
+  }
+}

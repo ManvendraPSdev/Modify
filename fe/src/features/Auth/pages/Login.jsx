@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import "../style/login.scss"
 import FormGroup from '../components/FormGroup'
-import { Link, useViewTransitionState } from 'react-router'
+import { Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router'
 
 const Login = () => {
 
-    const {laoding , handelLogin} = useAuth() ; 
+    const { handelLogin } = useAuth() ; 
     const [email , setEmail] = useState("") ; 
     const [userName , setUserName] = useState("") ; 
     const [password , setPassword] = useState("") ; 
@@ -17,7 +16,7 @@ const Login = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         await handelLogin({userName , email , password}) ; 
-        navigate("/")
+        navigate("/app")
     }
 
     return (

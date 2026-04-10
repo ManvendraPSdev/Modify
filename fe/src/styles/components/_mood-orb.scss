@@ -1,0 +1,92 @@
+@use "../mixins/mixins" as *;
+@use "../base/variables" as *;
+
+.mood-orb {
+  @include flex-center;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  min-width: 120px;
+  border-radius: $radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  position: relative;
+  @include ripple-container;
+  @include transition-smooth(transform box-shadow border-color, 0.35s);
+
+  &--happy {
+    background: rgba($color-happy, 0.12);
+    @include mood-glow($color-happy, 20px);
+    animation: orb-pulse-happy 2.4s ease-in-out infinite;
+  }
+
+  &--sad {
+    background: rgba($color-sad, 0.12);
+    @include mood-glow($color-sad, 18px);
+    animation: orb-fade-sad 5s ease-in-out infinite;
+  }
+
+  &--surprised {
+    background: rgba($color-surprised, 0.14);
+    @include mood-glow($color-surprised, 22px);
+    animation: orb-bounce-surprised 2s ease-in-out infinite;
+  }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  &__emoji {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@keyframes orb-pulse-happy {
+  0%,
+  100% {
+    box-shadow: 0 0 24px rgba($color-happy, 0.35), 0 0 56px rgba($color-happy, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 36px rgba($color-happy, 0.55), 0 0 80px rgba($color-happy, 0.25);
+  }
+}
+
+@keyframes orb-fade-sad {
+  0%,
+  100% {
+    opacity: 0.92;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes orb-bounce-surprised {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-6px) scale(1.04);
+  }
+  45% {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+.mood-orb__ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  pointer-events: none;
+}

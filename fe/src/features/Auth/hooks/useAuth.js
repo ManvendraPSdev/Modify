@@ -33,10 +33,10 @@ export const useAuth = ()=>{
     const handelLogout = async()=>{
         setLoading(true) ; 
         try {
-            const data = await logout() ; 
+            await logout();
             setUser(null) ; 
-        } catch (error) {
-            console.log(data.user)  ;
+        } catch (err) {
+            console.log(err);
         }finally{
             setLoading(false) ; 
         }

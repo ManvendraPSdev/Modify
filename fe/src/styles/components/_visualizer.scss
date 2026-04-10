@@ -1,0 +1,19 @@
+@use "../base/variables" as *;
+
+.audio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 36px;
+  padding: 0 0.5rem;
+}
+
+.audio-visualizer__bar {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--mood-primary), var(--mood-secondary));
+  opacity: 0.85;
+  transform-origin: bottom center;
+}

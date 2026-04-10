@@ -1,0 +1,118 @@
+@use "../mixins/mixins" as *;
+@use "../base/variables" as *;
+
+.moodify-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: $nav-height;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+  @include flex-between;
+  background: rgba(10, 10, 15, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.moodify-nav__brand {
+  @include flex-center;
+  gap: 0.65rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+.moodify-nav__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  @include flex-center;
+  background: linear-gradient(135deg, var(--mood-primary), var(--mood-secondary));
+  @include mood-glow-theme(14px);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: $bg-deep;
+}
+
+.moodify-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  @media (max-width: 640px) {
+    gap: 0.15rem;
+  }
+}
+
+.moodify-nav__link {
+  padding: 0.5rem 0.85rem;
+  border-radius: $radius-pill;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $text-muted;
+  @include transition-smooth(color background, 0.25s);
+
+  &:hover {
+    color: $text-primary;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &--active {
+    color: $text-primary;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.moodify-nav__mood-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mood-primary);
+  box-shadow: 0 0 12px var(--mood-glow);
+  margin-left: 0.25rem;
+  animation: nav-dot-pulse var(--mood-pulse-speed) ease-in-out infinite;
+}
+
+@keyframes nav-dot-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.moodify-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.moodify-nav__btn {
+  padding: 0.55rem 1.1rem;
+  border-radius: $radius-pill;
+  font-weight: 600;
+  font-size: 0.88rem;
+  @include transition-smooth(transform box-shadow, 0.25s);
+
+  &--ghost {
+    border: 1px solid $glass-border;
+    color: $text-primary;
+    &:hover {
+      border-color: var(--mood-primary);
+      box-shadow: 0 0 20px var(--mood-glow-soft);
+    }
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, var(--mood-primary), var(--mood-secondary));
+    color: $bg-deep;
+    @include mood-glow-theme(12px);
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}

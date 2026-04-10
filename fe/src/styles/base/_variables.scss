@@ -1,0 +1,29 @@
+@use "sass:color";
+
+// Mood palette (strict)
+$color-happy: #ffd93d;
+$color-sad: #4d96ff;
+$color-surprised: #ff6b6b;
+$color-neutral: #8b7cf8;
+
+$bg-deep: #0a0a0f;
+$bg-card: rgba(255, 255, 255, 0.06);
+$glass-border: rgba(255, 255, 255, 0.12);
+$text-primary: #f4f4f8;
+$text-muted: rgba(244, 244, 248, 0.62);
+
+$radius-lg: 20px;
+$radius-md: 14px;
+$radius-pill: 999px;
+
+$font-display: "DM Sans", system-ui, -apple-system, sans-serif;
+$font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+
+$nav-height: 72px;
+$player-height: 108px;
+
+// Mood RGB helpers for glows
+@function mood-rgb($hex) {
+  @return color.channel($hex, "red", $space: rgb), color.channel($hex, "green", $space: rgb),
+    color.channel($hex, "blue", $space: rgb);
+}

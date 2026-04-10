@@ -1,0 +1,50 @@
+@use "sass:color";
+@use "variables" as *;
+
+:root {
+  --mood-primary: #{$color-neutral};
+  --mood-secondary: #{color.adjust($color-neutral, $lightness: -12%)};
+  --mood-glow: rgba(139, 124, 248, 0.45);
+  --mood-glow-soft: rgba(139, 124, 248, 0.15);
+  --mood-gradient-a: #0a0a0f;
+  --mood-gradient-b: #120d1a;
+  --mood-pulse-speed: 3s;
+  --mood-blur: 0px;
+  --mood-brightness: 1;
+}
+
+:root[data-mood="happy"] {
+  --mood-primary: #{$color-happy};
+  --mood-secondary: #{color.adjust($color-happy, $lightness: -18%)};
+  --mood-glow: rgba(255, 217, 61, 0.55);
+  --mood-glow-soft: rgba(255, 217, 61, 0.18);
+  --mood-gradient-a: #1a1408;
+  --mood-gradient-b: #0d0a14;
+  --mood-pulse-speed: 2.2s;
+  --mood-blur: 0px;
+  --mood-brightness: 1.05;
+}
+
+:root[data-mood="sad"] {
+  --mood-primary: #{$color-sad};
+  --mood-secondary: #{color.adjust($color-sad, $lightness: -15%)};
+  --mood-glow: rgba(77, 150, 255, 0.45);
+  --mood-glow-soft: rgba(77, 150, 255, 0.14);
+  --mood-gradient-a: #080c18;
+  --mood-gradient-b: #0a1018;
+  --mood-pulse-speed: 4.8s;
+  --mood-blur: 1px;
+  --mood-brightness: 0.92;
+}
+
+:root[data-mood="surprised"] {
+  --mood-primary: #{$color-surprised};
+  --mood-secondary: #{color.adjust($color-surprised, $lightness: -12%)};
+  --mood-glow: rgba(255, 107, 107, 0.55);
+  --mood-glow-soft: rgba(255, 107, 107, 0.2);
+  --mood-gradient-a: #160a0c;
+  --mood-gradient-b: #0a080e;
+  --mood-pulse-speed: 1.6s;
+  --mood-blur: 0px;
+  --mood-brightness: 1.02;
+}

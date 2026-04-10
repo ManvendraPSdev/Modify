@@ -1,0 +1,40 @@
+@use "../base/variables" as *;
+
+.moodify-layout__main {
+  padding: clamp(1rem, 3vw, 2rem);
+  padding-bottom: calc(#{$player-height} + 2.5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - #{$nav-height} - 2rem);
+}
+
+.dashboard__hero {
+  text-align: center;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.dashboard__title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.dashboard__subtitle {
+  margin-top: 0.5rem;
+  color: $text-muted;
+  font-size: 1rem;
+}
+
+.dashboard__loading {
+  text-align: center;
+  color: var(--mood-primary);
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.dashboard__hint {
+  text-align: center;
+  color: $text-muted;
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}

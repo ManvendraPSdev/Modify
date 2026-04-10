@@ -1,0 +1,68 @@
+@use "../base/variables" as *;
+
+.mood-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mood-particles__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--mood-primary);
+  opacity: 0.15;
+  filter: blur(1px);
+}
+
+:root[data-mood="happy"] .mood-particles__dot {
+  animation: particle-float-happy 8s ease-in-out infinite;
+}
+
+:root[data-mood="sad"] .mood-particles__dot {
+  animation: particle-drift-sad 14s ease-in-out infinite;
+  opacity: 0.1;
+}
+
+:root[data-mood="surprised"] .mood-particles__dot {
+  animation: particle-pop 3.5s ease-in-out infinite;
+  opacity: 0.22;
+}
+
+@keyframes particle-float-happy {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(12px, -24px) scale(1.2);
+    opacity: 0.28;
+  }
+}
+
+@keyframes particle-drift-sad {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate(-20px, 10px);
+    opacity: 0.16;
+  }
+}
+
+@keyframes particle-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  55% {
+    transform: scale(0.9);
+  }
+}

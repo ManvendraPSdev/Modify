@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import "../style/register.scss"
 import FormGroup from '../components/FormGroup'
 import { Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
@@ -13,14 +12,14 @@ const Register = () => {
 
     const navigate = useNavigate()
 
-    const { loading, handelRegister } = useAuth()
+    const { handelRegister } = useAuth()
 
     async function handleSubmit(e) {
         e.preventDefault()
 
         await handelRegister({ userName, password, email })
 
-        navigate('/')
+        navigate("/app")
 
     }
 

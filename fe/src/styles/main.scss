@@ -1,0 +1,17 @@
+// MOODIFY — global design system (SCSS only)
+@use "base/variables" as *;
+@use "base/reset";
+@use "base/typography";
+@use "base/mood-theme";
+@use "components/mood-background";
+@use "components/particles";
+@use "components/navbar";
+@use "components/mood-orb";
+@use "components/detection-panel";
+@use "components/song-grid";
+@use "components/player";
+@use "components/visualizer";
+@use "components/upload";
+@use "pages/landing";
+@use "pages/dashboard";
+@use "pages/auth-moodify";

@@ -13,11 +13,12 @@ const Protected = ({children}) => {
         )
     }
 
-    if(!loading && !user){
-        return navigate("/register")
+    if (!loading && !user) {
+        navigate("/register")
+        return null
     }
 
-  return ({children})
+    return children
 }
 
 export default Protected
